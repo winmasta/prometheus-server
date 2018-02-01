@@ -1,38 +1,43 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible role for latest prometheus server in docker container. UI behind nginx with basic authorization. Tested on:
+  - Ubuntu 14.04 Trusty
+  - Ubuntu 16.04 Xenial
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Installed OS:
+ - Ubuntu 14.04 Trusty
+ - Ubuntu 16.04 Xenial
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+PROM_PORT: 9090 # Default prometheus port
+SCRAPE_INTERVAL: 15s # Default prometheus metrics scrape interval
+
+**Following variables can be changed after deployment by editing `/etc/prometheus/prometheus.yml` if you leave it
+default. Don't forget to restart prometheus container `docker restart prometheus`**
+
+CONSUL_JOB_NAME: consul # Prometheus job name for consul cluster
+CONSUL_SERVICE_TAG: consul # Consul tag to include to consul job
+CONSUL_DROP_TAG: consul-server # Consul tag to exclude consul servers
+STATIC_JOB_NAME: hydra # Static job name
+STATIC_JOB_TARGET: www.leningrad.spb.ru # Static job target DNS name or IP addsess
+STATIC_JOB_PORT: 9100 # Static job port
+CONFIG_DIR: /etc/prometheus # Prometheus config directory
+CONFIG_FILENAME: prometheus.yml # Prometheus config filename
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Depends on:
+ - winmasta.docker-latest
+ - winmasta.nginx
 
 License
 -------
 
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+MIT
