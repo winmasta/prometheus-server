@@ -24,6 +24,9 @@ install:
   - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
   - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible-lint; fi
 
+  # Install role dependencies
+  - ansible-galaxy install -r requirements.yml --roles-path ../
+
 script:
   # Check the playbook's syntax.
   - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
