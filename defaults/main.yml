@@ -1,2 +1,11 @@
 ---
-# defaults file for prometheus
+PROM_PORT: 9090
+SCRAPE_INTERVAL: 15s
+CONSUL_JOB_NAME: consul
+CONSUL_SERVICE_TAG: consul
+CONSUL_DROP_TAG: consul-server
+STATIC_JOB_NAME: hydra
+STATIC_JOB_TARGET: www.leningrad.spb.ru
+STATIC_JOB_PORT: 9100
+CONFIG_DIR: /etc/prometheus
+CONFIG_FILENAME: prometheus.yml
