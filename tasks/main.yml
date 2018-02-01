@@ -1,2 +1,16 @@
 ---
-# tasks file for prometheus
+- name: Create prometheus config directory
+  file:
+    path: "{{ CONFIG_DIR }}"
+    state: directory
+    mode: 0755
+
+- name: Copy prometheus config file
+  template:
+    src: prometheus.j2
+    dest: "{{ CONFIG_DIR }}/{{ CONFIG_FILENAME }}"
+
+- name: Start consul docker container
+  shell: docker stop prometheus || true && docker rm prometheus || true && docker run -d --net=host --name=prometheus \
+         -v /etc/prometheus:/etc/prometheus --restart unless-stopped prom/prometheus \
+         -web.listen-address 127.0.0.1:"{{ PROM_PORT }}" -config.file="{{ CONFIG_DIR }}/{{ CONFIG_FILENAME }}"
