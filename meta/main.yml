@@ -15,4 +15,4 @@ galaxy_info:
     - sibedge
 
   dependencies:
-    - nginx
+    - winmasta.nginx
