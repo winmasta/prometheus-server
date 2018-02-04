@@ -11,7 +11,12 @@
     dest: "{{ CONFIG_DIR }}/{{ CONFIG_FILENAME }}"
 
 - name: Start prometheus docker container
-  shell: docker stop prometheus || true && docker rm prometheus || true && docker run -d --net=host --name=prometheus \
-         -v /etc/prometheus:/etc/prometheus --restart unless-stopped prom/prometheus \
-         --web.listen-address 127.0.0.1:"{{ PROM_PORT }}" --config.file="{{ CONFIG_DIR }}/{{ CONFIG_FILENAME }}"
+  docker_container:
+    name: prometheus
+    image: prom/prometheus
+    network_mode: host
+    volumes:
+      - /etc/prometheus:/etc/prometheus
+    restart_policy: unless-stopped
+    command: --web.listen-address 127.0.0.1:"{{ PROM_PORT }}" --config.file="{{ CONFIG_DIR }}/{{ CONFIG_FILENAME }}"
   notify: restart nginx
