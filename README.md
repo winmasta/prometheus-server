@@ -30,6 +30,15 @@ STATIC_JOB_PORT: 9100 # Static job port
 CONFIG_DIR: /etc/prometheus # Prometheus config directory
 CONFIG_FILENAME: prometheus.yml # Prometheus config filename
 
+Additional variables, which defined in corresponding roles can be overwritten by adding variables with the same
+name in playbook main.yml vars section. Example:
+
+```yaml
+vars:
+  NGINX_DEFAULT_PASSWD: another_password # This variable will overwrite default variable `NGINX_DEFAULT_PASSWD` in
+                                         # role `winmasta.nginx`
+```
+
 Dependencies
 ------------
 
