@@ -4,11 +4,11 @@ scrape_configs:
   # Self monitoring job
   - job_name: 'prometheus'
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['localhost:{{ PROM_PORT }}']
   # Jobs for consul targets
   - job_name: {{ CONSUL_JOB_NAME }}
     consul_sd_configs:
-      - server: 'localhost:8500'
+      - server: 'localhost:{{ CONSUL_PORT }}'
         services: ['{{ CONSUL_SERVICE_TAG }}']
     relabel_configs:
       - source_labels: [__meta_consul_service]
